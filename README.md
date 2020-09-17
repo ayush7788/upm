@@ -15,6 +15,7 @@ UPM supports these commands till now-
 2. remove (to uninstall a package manager)
 3. sync (to sync the repo)
 4. upgrade (to perform full system upgrade)
+5. look (search for a package in repo)
 
 # Supported Distributions
 At this time only two distros are supported!
@@ -33,3 +34,10 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 > upm upgrade
 5. To search for a package in repo
 > upm look "pkg-name"
+
+# TO-do list
+- [x] Do first release
+- [x] Support Ubuntu
+- [x] Support Arch Linux
+- [ ] Support Debian
+- [ ] Support Void Linux
