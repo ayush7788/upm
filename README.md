@@ -24,7 +24,9 @@ At this time only two distros are supported!
 
 # Installation
 To install upm, just clone the repo and run install.sh.
+
 If you want to install using sch(available at https://github.com/ayush7788/sch), a codefile is included for help!
+
 # Usage
 When you will install "upm", it will read a file "/etc/os-release" to identify the distribution.
 1. To install a package
