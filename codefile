@@ -1,0 +1,2 @@
+<build>g++ -o upm main.cpp;<build>
+<install>sudo mv upm /bin/upm;<install>
