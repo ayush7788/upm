@@ -5,8 +5,8 @@ string pkgmgr, ins, rem, look, update, sync;
 string homedir;
 
 void parse(string line){
-	int count = 0;
-	int suc = 0;
+    int count = 0;
+    int suc = 0;
     int pkger = 0;
     int inser = 0;
     int remer = 0;
@@ -19,7 +19,7 @@ void parse(string line){
 		if(tok == "PKGMGR="){
 			tok = "";
 			suc = 1;
-            pkger = 1;
+                        pkger = 1;
 		}
         else if(tok == "INSTALL="){
             tok = "";
@@ -129,7 +129,8 @@ void check_pkgmgr(){
                 exist.open(cfg);
                 if(!exist){
                     obj.open(cfg);
-                    obj << "apt";
+                    obj << "[UPM Config]\nPKGMGR=\"apt\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"upgrade\"\nSYNC=\"update\"\n";
+
                     obj.close(); 
                 }
                 exist.close();
@@ -144,7 +145,8 @@ void check_pkgmgr(){
             look = "search";
             if(system("mkdir ~/.config/upm >>/dev/null 2>>/dev/null") == 0){
                 obj.open(cfg);
-                obj << "dnf";
+                obj << "[UPM Config]\nPKGMGR=\"dnf\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"update\"\nSYNC=\"check-update\"\n";
+
                 obj.close();
             }
             else{
