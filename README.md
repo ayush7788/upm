@@ -44,5 +44,9 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 - [x] Do first release
 - [x] Support Ubuntu
 - [x] Support Arch Linux
-- [ ] Support Debian
-- [ ] Support Void Linux
+- [x] Change Identification system of package manager
+- [x] Support pacman
+- [x] Support apt
+- [x] support dnf
+- [ ] Make better flags support
+- [ ] Do second release
