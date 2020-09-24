@@ -18,7 +18,7 @@ UPM supports these commands till now-
 5. look (search for a package in repo)
 
 # Supported Package Managers
-At this time only two distros are supported!
+At this time only three package managers are supported!
 1. pacman
 2. apt
 3. dnf
