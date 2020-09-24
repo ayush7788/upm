@@ -2,7 +2,7 @@
 An universal package manager wrapper!
 One of the biggest headaches when disto hopping is learning, the commands to install or remove a program!
 You can easily search for those commands on the internet, but to help you a bit Universal Package Manager "Wrapper" is here!
-It can be installed on any linux distro using systemd as init system.
+It can be installed on any linux distro using supported package managers.
 It has simple command-line options, to install and remove packages, which are all same across all the distros that are supported till now.
 So, you don't need to memorize every package manager commands to do somehing, learn once and all your distros can do packager manager stuff with same commands!
 
@@ -19,16 +19,19 @@ UPM supports these commands till now-
 
 # Supported Distributions
 At this time only two distros are supported!
-1. Arch Linux (pacman)
-2. Ubuntu (apt)
+1. pacman
+2. apt
+3. dnf
 
 # Installation
 To install upm, just clone the repo and run install.sh as root.
 
 If you want to install using sch(available at https://github.com/ayush7788/sch), a codefile is included for help!
 
+If you are running UPM for first time, make sure you are running it as root! So that it can generate some config files.
+
 # Usage
-When you will install "upm", it will read a file "/etc/os-release" to identify the distribution.
+When you will run "upm", it will identify your package manager and generate a config in /usr/share/upm/config
 1. To install a package
 > upm install "pkg-name"
 2. To uninstall a package
@@ -41,6 +44,10 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 > upm look "pkg-name"
 6. Pass any non-defined flag to package manager
 > upm "any other param"
+
+If sometime you played up with config a bit more and now UPM cannot identify your package manager, you can always run(as root)
+> upm --configure
+to re-generate config file
 
 # TO-do list
 - [x] Do first release
