@@ -54,3 +54,4 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 - [x] Do second release
 - [ ] Add more default functions
 - [ ] Make native packages for various distros
+- [ ] Play Minecraft ^_^
