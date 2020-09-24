@@ -23,7 +23,7 @@ At this time only two distros are supported!
 2. Ubuntu (apt)
 
 # Installation
-To install upm, just clone the repo and run install.sh.
+To install upm, just clone the repo and run install.sh as root.
 
 If you want to install using sch(available at https://github.com/ayush7788/sch), a codefile is included for help!
 
@@ -39,6 +39,8 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 > upm upgrade
 5. To search for a package in repo
 > upm look "pkg-name"
+6. Pass any non-defined flag to package manager
+> upm "any other param"
 
 # TO-do list
 - [x] Do first release
@@ -48,5 +50,7 @@ When you will install "upm", it will read a file "/etc/os-release" to identify t
 - [x] Support pacman
 - [x] Support apt
 - [x] support dnf
-- [ ] Make better flags support
-- [ ] Do second release
+- [x] Make better flags support
+- [x] Do second release
+- [ ] Add more default functions
+- [ ] Make native packages for various distros
