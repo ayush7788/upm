@@ -1,77 +1,82 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+
+//package manager flags
 string pkgmgr, ins, rem, look, update, sync;
-string homedir;
+
+//identify which user is running this
+string user;
 
 void parse(string line){
-    int count = 0;
-    int suc = 0;
+	int count = 0;
+	int suc = 0;
     int pkger = 0;
     int inser = 0;
     int remer = 0;
-    int syncer=0;
-    int upgrader=0;
+    int syncer = 0;
+    int upgrader = 0;
     int looker = 0;
 	string str, tok;
 	for(int i = 0; i<line.length(); i++){
 		tok += line[i];
 		if(tok == "PKGMGR="){
 			tok = "";
-			suc = 1;
-                        pkger = 1;
+            pkger = 1;
 		}
         else if(tok == "INSTALL="){
             tok = "";
-			suc = 1;
-            inser = 0;
+            inser = 1;
         }
         else if(tok == "REMOVE="){
             tok = "";
-			suc = 1;
-            remer = 0;
+            remer = 1;
         }
         else if(tok == "SYNC="){
             tok = "";
-			suc = 1;
-            syncer = 0;
+            syncer = 1;
         }
         else if(tok == "UPDATE="){
             tok = "";
-			suc = 1;
-            upgrader = 0;
+            upgrader = 1;
         }
         else if(tok == "SYNC="){
             tok = "";
-			suc = 1;
-            syncer = 0;
+            syncer = 1;
         }
 		else if(tok == "\""){
-			if(suc == 1){
-				if(count == 0){
-					count = 1;
-					tok = "";
-				}
-				else if(count == 1){
-					count = 0;
-                    if(pkger == 1){
-                        pkgmgr = str;
-                    }
-                    else if(inser == 1){
-                        ins = str;
-                    }
-                    else if(remer == 1){
-                        rem = str;
-                    }
-                    else if(looker == 1){
-                        look = str;
-                    }
-                    else if(syncer == 1){
-                        sync = str;
-                    }
-					str = "";
-					tok = "";
-				}
+			if(count == 0){
+				count = 1;
+				tok = "";
+			}
+			else if(count == 1){
+				count = 0;
+                if(pkger == 1){
+                    pkgmgr = str;
+                    pkger = 0;
+                }
+                else if(inser == 1){
+                    ins = str;
+                    inser = 0;
+                }
+                else if(remer == 1){
+                    rem = str;
+                    remer = 0;
+                }
+                else if(looker == 1){
+                    look = str;
+                    looker = 0;
+                }
+                else if(syncer == 1){
+                    sync = str;
+                    syncer = 0;
+                }
+                else if(upgrader == 1){
+                    update = str;
+                    upgrader = 0;
+                }
+				str = "";
+				tok = "";
 			}
 		}
 		else if(count == 1){
@@ -83,115 +88,67 @@ void parse(string line){
 
 void check_pkgmgr(){
     ofstream obj;
-    ifstream check;
     string line;
-    string cfg = homedir + "/.config/upm/config";
-    check.open(cfg);
-    if(!check){
-        if(system("pacman --version >>/dev/null 2>>/dev/null") == 0){
-            pkgmgr = "pacman";
-            ins = "-S";
-            rem = "-R";
-            look = "-Ss";
-            update = "-Syu";
-            sync = "-Sy";
-            if(system("mkdir ~/.config/upm >>/dev/null 2>>/dev/null") == 0){
-                obj.open(cfg);
-                cout << "creating file\n";
-                obj << "[UPM Config]\nPKGMGR=\"pacman\"\nINSTALL=\"-S\"\nREMOVE=\"-R\"\nLOOK=\"-Ss\"\nUPDATE=\"-Syu\"\nSYNC=\"-Sy\"\n";
-                obj.close();
-            }
-            else{
-                ifstream exist;
-                exist.open(cfg);
-                if(!exist){
-                    obj.open(cfg);
-                    obj << "pacman";
-                    obj.close(); 
-                }
-                exist.close();
-            }
-        }
-        else if(system("apt list --installed >>/dev/null 2>>/dev/null") == 0){
-            pkgmgr = "apt";
-            ins = "install";
-            rem = "remove";
-            look = "search";
-            update = "update";
-            sync = "update";
-            if(system("mkdir ~/.config/upm >>/dev/null 2>>/dev/null") == 0){
-                obj.open(cfg);
-                obj << "apt";
-                obj.close();
-            }
-            else{
-                ifstream exist;
-                exist.open(cfg);
-                if(!exist){
-                    obj.open(cfg);
-                    obj << "[UPM Config]\nPKGMGR=\"apt\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"upgrade\"\nSYNC=\"update\"\n";
-
-                    obj.close(); 
-                }
-                exist.close();
-            }
-        }
-        else if(system("dnf info >>/dev/null 2>>/dev/null") == 0){
-            pkgmgr = "dnf";
-            ins = "install";
-            rem = "remove";
-            sync = "check-update";
-            update = "update";
-            look = "search";
-            if(system("mkdir ~/.config/upm >>/dev/null 2>>/dev/null") == 0){
-                obj.open(cfg);
-                obj << "[UPM Config]\nPKGMGR=\"dnf\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"update\"\nSYNC=\"check-update\"\n";
-
-                obj.close();
-            }
-            else{
-                ifstream exist;
-                exist.open(cfg);
-                if(!exist){
-                    obj.open(cfg);
-                    obj << "dnf";
-                    obj.close(); 
-                }
-                exist.close();
-            }
+    string cfg = "/usr/share/upm/config";
+    cout << "Generating UPM config in - " << cfg << endl;
+    if(system("pacman --version >>/dev/null 2>>/dev/null") == 0){
+        pkgmgr = "pacman";
+        ins = "-S";
+        rem = "-R";
+        look = "-Ss";
+        update = "-Syu";
+        sync = "-Sy";
+        if(system("mkdir /usr/share/upm >>/dev/null 2>>/dev/null") == 0){
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"pacman\"\nINSTALL=\"-S\"\nREMOVE=\"-R\"\nLOOK=\"-Ss\"\nUPDATE=\"-Syu\"\nSYNC=\"-Sy\"\n";
+            obj.close();
         }
         else{
-            cout << "Unknown package manager!\n";
-            pkgmgr = "unknown";
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"pacman\"\nINSTALL=\"-S\"\nREMOVE=\"-R\"\nLOOK=\"-Ss\"\nUPDATE=\"-Syu\"\nSYNC=\"-Sy\"\n";
+            obj.close(); 
         }
-        check.close();
+    }
+    else if(system("apt list --installed >>/dev/null 2>>/dev/null") == 0){
+        pkgmgr = "apt";
+        ins = "install";
+        rem = "remove";
+        look = "search";
+        update = "update";
+        sync = "update";
+        if(system("mkdir /usr/share/upm >>/dev/null 2>>/dev/null") == 0){
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"apt\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"upgrade\"\nSYNC=\"update\"\n";
+            obj.close();
+        }
+        else{
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"apt\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"upgrade\"\nSYNC=\"update\"\n";
+            obj.close(); 
+        }
+    }
+    else if(system("dnf info >>/dev/null 2>>/dev/null") == 0){
+        ins = "install";
+        rem = "remove";
+        sync = "check-update";
+        update = "update";
+        look = "search";
+        if(system("mkdir /usr/share/upm >>/dev/null 2>>/dev/null") == 0){
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"dnf\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"update\"\nSYNC=\"check-update\"\n";
+            obj.close();
+        }
+        else{
+            obj.open(cfg);
+            obj << "[UPM Config]\nPKGMGR=\"dnf\"\nINSTALL=\"install\"\nREMOVE=\"remove\"\nLOOK=\"search\"\nUPDATE=\"update\"\nSYNC=\"check-update\"\n";
+            obj.close(); 
+        }
     }
     else{
-        getline(check, pkgmgr);
-        if(pkgmgr == "pacman"){
-            ins = "-S";
-            rem = "-R";
-            look = "-Ss";
-            update = "-Syu";
-            sync = "-Sy";
-        }
-        else if(pkgmgr == "apt"){
-            ins = "install";
-            rem = "remove";
-            look = "search";
-            update = "update";
-            sync = "update";
-        }
-        else if(pkgmgr == "dnf"){
-            ins = "install";
-            rem = "remove";
-            sync = "check-update";
-            update = "update";
-            look = "search";
-        }
-        else{
-            cout << "unsupported package manager defined in ~/.config/upm/config file\n";
-        }
+        cout << "Unknown package manager!\n";
+        obj.open(cfg);
+        obj << "[UPM Config]\nPKGMGR=\"unknown\"\nINSTALL=\"unknown\"\nREMOVE=\"unknown\"\nLOOK=\"unknown\"\nUPDATE=\"unknown\"\nSYNC=\"unknown\"\n";
+        pkgmgr = "unknown";
     }
 }
 
@@ -230,17 +187,30 @@ void sync_func(){
 	system(c);
 }
 
+void exec_flags(string flags){
+    string cmd;
+	cmd = pkgmgr + " " + flags;
+	const char *c = cmd.c_str();
+	system(c);
+}
+
 int main(int argc, char **argv){
-    homedir = getenv("HOME");
+    user = getenv("USER");
     ifstream obj;
     string line;
-    obj.open(homedir + "/.config/upm/config");
+    string cfg = "/usr/share/upm/config";
+    obj.open(cfg);
     if(!obj){
-        check_pkgmgr();
+        if(user == "root"){
+            check_pkgmgr();
+        }
+        else{
+            cout << "You are running the program without config file!\nplease run \"upm --configure\" as root\n";
+        }
     }
-    else{
+    else if(obj){
         while(getline(obj, line)){
-            parse(line);
+            parse(line);  
         }
     }
     obj.close();
@@ -269,8 +239,20 @@ int main(int argc, char **argv){
 	    else if(arg == "--version"){
 		    cout << "Universal Package Manger \"Wrapper\"\nver- 2.1\nMode: " << pkgmgr << "\nBuilt by Ayush Yadav\n";
 	    }
+        else if(arg == "--configure"){
+            if(user == "root"){
+                check_pkgmgr();
+            }
+            else{
+                cout << "you must be root to perform this action!\n";
+            }
+        }
 	    else{
-		    cout << "upm:" << " invalid option:" << "\'" << arg << "\'" << endl;
+            for(int i = 1;i < argc; i++){
+                arguments += argv[i];
+                arguments += " ";
+            }
+		    exec_flags(arguments);
 	    }
     }
     return 0;

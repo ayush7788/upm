@@ -1,2 +1,3 @@
-<build>g++ -o upm main.cpp;%install%;<build>
-<install>sudo mv upm /bin/upm;<install>
+<build>g++ -o upm main.cpp;echo Compiled!;<build>
+<install>%build%;mv upm /usr/bin/upm;<install>
+<uninstall>rm /usr/bin/upm;rm -rf /usr/share/upm/;echo uninstalled UPM;<uninstall>
