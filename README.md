@@ -17,7 +17,7 @@ UPM supports these commands till now-
 4. upgrade (to perform full system upgrade)
 5. look (search for a package in repo)
 
-# Supported Distributions
+# Supported Package Managers
 At this time only two distros are supported!
 1. pacman
 2. apt
@@ -47,6 +47,7 @@ When you will run "upm", it will identify your package manager and generate a co
 
 If sometime you played up with config a bit more and now UPM cannot identify your package manager, you can always run(as root)
 > upm --configure
+
 to re-generate config file
 
 # TO-do list
