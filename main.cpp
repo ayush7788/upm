@@ -9,8 +9,8 @@ string pkgmgr, ins, rem, look, update, sync;
 string user;
 
 void parse(string line){
-	int count = 0;
-	int suc = 0;
+    int count = 0;	
+    int suc = 0;
     int pkger = 0;
     int inser = 0;
     int remer = 0;
