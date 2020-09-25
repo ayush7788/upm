@@ -26,6 +26,11 @@ At this time only three package managers are supported!
 # Installation
 To install upm, just clone the repo and run install.sh as root.
 
+On a typical linux install, you should do 
+> sudo sh install.sh
+
+In terminal in the directory where you cloned the repo.
+
 If you want to install using sch(available at https://github.com/ayush7788/sch), a codefile is included for help!
 
 If you are running UPM for first time, make sure you are running it as root! So that it can generate some config files.
