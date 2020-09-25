@@ -64,7 +64,7 @@ to re-generate config file
 - [x] Support apt
 - [x] support dnf
 - [x] Make better flags support
-- [ ] Do second release
+- [x] Do second release
 - [ ] Add more default functions
 - [ ] Make native packages for various distros
 - [ ] Play Minecraft ^_^
