@@ -28,6 +28,10 @@ void parse(string line){
             tok = "";
             inser = 1;
         }
+        else if(tok == "LOOK="){
+            tok = "";
+            looker = 1;
+        }
         else if(tok == "REMOVE="){
             tok = "";
             remer = 1;
