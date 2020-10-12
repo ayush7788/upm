@@ -27,8 +27,9 @@ At this time only three package managers are supported!
 To install upm, just clone the repo and run install.sh as root.
 
 On a typical linux install, you should do 
-> sudo sh install.sh
-
+```
+sudo sh install.sh
+```
 In terminal in the directory where you cloned the repo.
 
 If you want to install using sch(available at https://github.com/ayush7788/sch), a codefile is included for help!
@@ -38,21 +39,33 @@ If you are running UPM for first time, make sure you are running it as root! So 
 # Usage
 When you will run "upm", it will identify your package manager and generate a config in /usr/share/upm/config
 1. To install a package
-> upm install "pkg-name"
+```
+upm install "pkg-name"
+```
 2. To uninstall a package
-> upm remove "pkg-name"
+```
+upm remove "pkg-name"
+```
 3. To sync the repositories
-> upm sync
+```
+upm sync
+```
 4. To do full system upgrade 
-> upm upgrade
+```
+upm upgrade
+```
 5. To search for a package in repo
-> upm look "pkg-name"
+```
+upm look "pkg-name"
+```
 6. Pass any non-defined flag to package manager
-> upm "any other param"
-
+```
+upm "any other param"
+```
 If sometime you played up with config a bit more and now UPM cannot identify your package manager, you can always run(as root)
-> upm --configure
-
+```
+upm --configure
+```
 to re-generate config file
 
 # TO-do list
